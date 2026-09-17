@@ -19,6 +19,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Profile from "./pages/Profile";
 import QuickOrder from "./pages/QuickOrder";
 import Register from "./pages/Register";
+import LegalPage from "./pages/LegalPage";
 
 export default function App() {
     return (
@@ -35,6 +36,9 @@ export default function App() {
                                     <Route path="/quick-order/:id" element={<QuickOrder/>}/>
                                     <Route path="/cart" element={<Cart/>}/>
                                     <Route path="/checkout" element={<Checkout/>}/>
+                                    <Route path="/privacy-policy" element={<LegalPage type="privacy"/>}/>
+                                    <Route path="/terms-of-service" element={<LegalPage type="terms"/>}/>
+                                    <Route path="/shipping-and-returns" element={<LegalPage type="shipping"/>}/>
                                     <Route path="/login" element={<Login/>}/>
                                     <Route path="/register" element={<Register/>}/>
                                     <Route
