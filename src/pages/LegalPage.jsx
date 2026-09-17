@@ -113,7 +113,7 @@ const legalContent = {
                     title: "1. Срокове и цени за доставка",
                     paragraphs: [
                         `Ние изпращаме нашите продукти чрез куриерски фирми ${couriersBg}.`,
-                        "Поръчките се обработват в рамките на 1-2 работни дни от момента на потвърждението им.",
+                        "Поръчките се обработват в рамките на 1-3 работни дни от момента на потвърждението им.",
                         "Стандартният срок за доставка е 24 до 48 часа след изпращане на пратката за работни дни.",
                         "Цената за доставка се изчислява автоматично по тарифите на куриера или се уточнява при потвърждение на поръчката.",
                     ],
@@ -248,7 +248,7 @@ const legalContent = {
                     title: "1. Shipping Timelines and Rates",
                     paragraphs: [
                         `We ship our products using courier companies such as ${couriersEn}.`,
-                        "Orders are processed within 1-2 business days from the moment they are confirmed.",
+                        "Orders are processed within 1-3 business days from the moment they are confirmed.",
                         "Standard delivery time is usually 2 to 3 business days following shipment.",
                         "Shipping costs are calculated dynamically based on courier rates at checkout or are confirmed separately before dispatch.",
                     ],
