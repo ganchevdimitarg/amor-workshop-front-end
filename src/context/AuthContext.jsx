@@ -30,7 +30,7 @@ export function AuthProvider({children}) {
         [users, userId]
     );
 
-    function register({firstName, lastName, email, password}) {
+    function register({firstName, lastName, email, phone, password}) {
         const normalizedEmail = email.trim().toLowerCase();
         if (users.some((candidate) => candidate.email === normalizedEmail)) {
             throw new Error("EMAIL_EXISTS");
@@ -41,7 +41,7 @@ export function AuthProvider({children}) {
             lastName: lastName.trim(),
             email: normalizedEmail,
             password,
-            phone: "",
+            phone: phone.trim(),
             address: "",
             transportCompany: "",
             createdAt: new Date().toISOString(),

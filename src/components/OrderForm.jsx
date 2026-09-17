@@ -11,6 +11,9 @@ const EMPTY = {
   email: "",
 };
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_PATTERN = /^\+?[0-9\s().-]{7,20}$/;
+
 export default function OrderForm({ initialValues, lockEmail = false, submitLabel, onSubmit }) {
   const { t } = useLanguage();
   const [values, setValues] = useState({ ...EMPTY, ...initialValues });
@@ -19,18 +22,21 @@ export default function OrderForm({ initialValues, lockEmail = false, submitLabe
 
   function validate(v) {
     const errs = {};
+    const email = v.email.trim();
+    const phone = v.phone.trim();
+
     if (!v.firstName.trim()) errs.firstName = t("form.errFirstName");
     if (!v.lastName.trim()) errs.lastName = t("form.errLastName");
-    if (!v.phone.trim()) {
+    if (!phone) {
       errs.phone = t("form.errPhone");
-    } else if (!/^[0-9+\s().-]{7,}$/.test(v.phone.trim())) {
+    } else if (!PHONE_PATTERN.test(phone)) {
       errs.phone = t("form.errPhoneInvalid");
     }
     if (!v.address.trim()) errs.address = t("form.errAddress");
     if (!v.transportCompany) errs.transportCompany = t("form.errTransport");
-    if (!v.email.trim()) {
+    if (!email) {
       errs.email = t("form.errEmailRequired");
-    } else if (!/^\S+@\S+\.\S+$/.test(v.email.trim())) {
+    } else if (!EMAIL_PATTERN.test(email)) {
       errs.email = t("form.errEmail");
     }
     return errs;
@@ -48,7 +54,11 @@ export default function OrderForm({ initialValues, lockEmail = false, submitLabe
 
     setSubmitting(true);
     try {
-      await onSubmit(values);
+      await onSubmit({
+        ...values,
+        email: values.email.trim(),
+        phone: values.phone.trim(),
+      });
     } finally {
       setSubmitting(false);
     }

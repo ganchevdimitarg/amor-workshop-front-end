@@ -4,6 +4,9 @@ import { TRANSPORT_COMPANIES } from "../config";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_PATTERN = /^\+?[0-9\s().-]{7,20}$/;
+
 export default function Profile() {
     const { user, updateProfile, deleteProfile } = useAuth();
     const { t } = useLanguage();
@@ -17,6 +20,7 @@ export default function Profile() {
         transportCompany: "",
     });
     const [editing, setEditing] = useState(false);
+    const [fieldErrors, setFieldErrors] = useState({});
     const [errorCode, setErrorCode] = useState("");
     const [saved, setSaved] = useState(false);
 
@@ -36,11 +40,37 @@ export default function Profile() {
     function update(field, value) {
         setSaved(false);
         setErrorCode("");
+        setFieldErrors((prev) => ({ ...prev, [field]: "" }));
         setValues((prev) => ({ ...prev, [field]: value }));
+    }
+
+    function validate(v) {
+        const errs = {};
+        const email = v.email.trim();
+        const phone = v.phone.trim();
+
+        if (!v.firstName.trim()) errs.firstName = t("form.errFirstName");
+        if (!v.lastName.trim()) errs.lastName = t("form.errLastName");
+        if (!email) {
+            errs.email = t("form.errEmailRequired");
+        } else if (!EMAIL_PATTERN.test(email)) {
+            errs.email = t("form.errEmail");
+        }
+        if (!phone) {
+            errs.phone = t("form.errPhone");
+        } else if (!PHONE_PATTERN.test(phone)) {
+            errs.phone = t("form.errPhoneInvalid");
+        }
+
+        return errs;
     }
 
     function handleSubmit(event) {
         event.preventDefault();
+
+        const validationErrors = validate(values);
+        setFieldErrors(validationErrors);
+        if (Object.keys(validationErrors).length > 0) return;
 
         try {
             updateProfile(values);
@@ -61,6 +91,7 @@ export default function Profile() {
             transportCompany: user.transportCompany || "",
         });
         setEditing(false);
+        setFieldErrors({});
         setErrorCode("");
         setSaved(false);
     }
@@ -100,7 +131,7 @@ export default function Profile() {
                 </p>
             )}
 
-            <form className="order-form profile-form" onSubmit={handleSubmit}>
+            <form className="order-form profile-form" onSubmit={handleSubmit} noValidate>
                 <div className="order-form__row">
                     <div className="field">
                         <label htmlFor="firstName">{t("form.firstName")}</label>
@@ -109,8 +140,9 @@ export default function Profile() {
                             value={values.firstName}
                             onChange={(e) => update("firstName", e.target.value)}
                             disabled={!editing}
-                            required
+                            aria-invalid={Boolean(fieldErrors.firstName)}
                         />
+                        {fieldErrors.firstName && <p className="field__error">{fieldErrors.firstName}</p>}
                     </div>
 
                     <div className="field">
@@ -120,8 +152,9 @@ export default function Profile() {
                             value={values.lastName}
                             onChange={(e) => update("lastName", e.target.value)}
                             disabled={!editing}
-                            required
+                            aria-invalid={Boolean(fieldErrors.lastName)}
                         />
+                        {fieldErrors.lastName && <p className="field__error">{fieldErrors.lastName}</p>}
                     </div>
                 </div>
 
@@ -133,21 +166,25 @@ export default function Profile() {
                         value={values.email}
                         onChange={(e) => update("email", e.target.value)}
                         disabled={!editing}
+                        aria-invalid={Boolean(fieldErrors.email)}
                         autoComplete="email"
-                        required
                     />
+                    {fieldErrors.email && <p className="field__error">{fieldErrors.email}</p>}
                 </div>
 
                 <div className="field">
                     <label htmlFor="phone">{t("form.phone")}</label>
                     <input
                         id="phone"
+                        type="tel"
                         value={values.phone}
                         onChange={(e) => update("phone", e.target.value)}
                         disabled={!editing}
+                        aria-invalid={Boolean(fieldErrors.phone)}
                         autoComplete="tel"
                         placeholder={t("form.phonePlaceholder")}
                     />
+                    {fieldErrors.phone && <p className="field__error">{fieldErrors.phone}</p>}
                 </div>
 
                 <div className="field">
