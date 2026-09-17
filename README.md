@@ -1,12 +1,12 @@
 # Amor Workshop
 
-A small React storefront for selling handmade paintings: browse a gallery,
+A small React storefront for selling handmade Scandinavian Moss items: browse a gallery,
 add pieces to a cart or order one instantly, create an account to keep an
 order history, and notify the shop owner by email whenever an order comes in.
 
 ## What's included
 
-- **Gallery** of paintings with a details page for each piece
+- **Gallery** of Scandinavian Moss items with a details page for each piece
 - **Cart** and full **checkout**
 - **Quick order** — buy a single piece with no account, just shipping details
 - **Login / register**, with **order history** for logged-in customers
@@ -127,7 +127,7 @@ to generate a painterly placeholder. To use a real photo instead:
   fine for a local demo but not for a real production login system. A real
   deployment should use a proper backend with hashed passwords (or an
   auth provider like Auth0/Clerk/Supabase Auth).
-- The 9 sample paintings, prices, and courier list are placeholders —
+- The 9 sample Scandinavian Moss items, prices, and courier list are placeholders —
   edit `src/data/products.js` and `src/config.js` freely.
 
 ## Project structure
