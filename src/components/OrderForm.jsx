@@ -28,7 +28,9 @@ export default function OrderForm({ initialValues, lockEmail = false, submitLabe
     }
     if (!v.address.trim()) errs.address = t("form.errAddress");
     if (!v.transportCompany) errs.transportCompany = t("form.errTransport");
-    if (v.email.trim() && !/^\S+@\S+\.\S+$/.test(v.email.trim())) {
+    if (!v.email.trim()) {
+      errs.email = t("form.errEmailRequired");
+    } else if (!/^\S+@\S+\.\S+$/.test(v.email.trim())) {
       errs.email = t("form.errEmail");
     }
     return errs;
@@ -126,17 +128,15 @@ export default function OrderForm({ initialValues, lockEmail = false, submitLabe
       </div>
 
       <div className="field">
-        <label htmlFor="email">
-          {t("form.email")} {lockEmail ? "" : t("form.emailOptional")}
-        </label>
+        <label htmlFor="email">{t("form.email")}</label>
         <input
-          id="email"
-          type="email"
-          value={values.email}
-          onChange={(e) => update("email", e.target.value)}
-          aria-invalid={Boolean(errors.email)}
-          autoComplete="email"
-          disabled={lockEmail}
+            id="email"
+            type="email"
+            value={values.email}
+            onChange={(e) => update("email", e.target.value)}
+            aria-invalid={Boolean(errors.email)}
+            autoComplete="email"
+            disabled={lockEmail}
         />
         {errors.email && <p className="field__error">{errors.email}</p>}
       </div>

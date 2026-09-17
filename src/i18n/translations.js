@@ -108,6 +108,7 @@ export const translations = {
             errPhoneInvalid: "That doesn't look like a valid phone number.",
             errAddress: "Enter a delivery address.",
             errTransport: "Choose a courier.",
+            errEmailRequired: "Enter an email address.",
             errEmail: "That doesn't look like a valid email.",
         },
         orderHistory: {
@@ -289,6 +290,7 @@ export const translations = {
             errPhoneInvalid: "Това не изглежда като валиден телефонен номер.",
             errAddress: "Въведете адрес за доставка.",
             errTransport: "Изберете куриер.",
+            errEmailRequired: "Въведете имейл адрес.",
             errEmail: "Това не изглежда като валиден имейл адрес.",
         },
         orderHistory: {
